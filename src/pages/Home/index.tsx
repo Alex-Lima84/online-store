@@ -46,7 +46,7 @@ export default function Home() {
       }
     };
     handleSortOption(sortOption);
-  }, [sortOption, clothesInfo]);
+  }, [sortOption, clothesInfo, filteredColor]);
 
   const handleColor = (color: string) => {
     console.log(color);
@@ -57,15 +57,19 @@ export default function Home() {
     setClothesInfo(filteredClothes);
   };
 
+  const handleSize = (size: string) => {
+    console.log(size)
+  }
+
   const colorsSet = new Set(clothesInfo.map((item: any) => item.color));
-  const colorsArray = [...colorsSet];
+  const colorsArray = [...colorsSet].sort();
 
   const sizeSet = new Set(clothesInfo.map((item: any) => item.size));
   const sizeArray = [...sizeSet];
 
   const newSizeArray = sizeArray.flat(1);
   const newSizeSet = new Set(newSizeArray);
-  const finalSizeArray = [...newSizeSet];
+  const finalSizeArray = [...newSizeSet].sort();
 
   return (
     <>
@@ -112,7 +116,7 @@ export default function Home() {
                     <input
                       type="radio"
                       name="color-info"
-                      onChange={() => handleColor(item)}
+                      onChange={() => handleSize(item)}
                     ></input>
                     <label>{item}</label>
                   </div>
