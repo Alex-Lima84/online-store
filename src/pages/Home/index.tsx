@@ -49,6 +49,7 @@ export default function Home() {
   }, [sortOption, clothesInfo]);
 
   const handleColor = (color: string) => {
+    console.log(color);
     setFilteredColor(color);
     const filteredClothes = clothesInfo.filter((clothing: any) => {
       return clothing.color === filteredColor;
@@ -58,6 +59,13 @@ export default function Home() {
 
   const colorsSet = new Set(clothesInfo.map((item: any) => item.color));
   const colorsArray = [...colorsSet];
+
+  const sizeSet = new Set(clothesInfo.map((item: any) => item.size));
+  const sizeArray = [...sizeSet];
+
+  const newSizeArray = sizeArray.flat(1);
+  const newSizeSet = new Set(newSizeArray);
+  const finalSizeArray = [...newSizeSet];
 
   return (
     <>
@@ -85,6 +93,21 @@ export default function Home() {
             <h3>CORES</h3>
             {colorsArray
               ? colorsArray.map((item: any, id) => (
+                  <div key={id}>
+                    <input
+                      type="radio"
+                      name="color-info"
+                      onChange={() => handleColor(item)}
+                    ></input>
+                    <label>{item}</label>
+                  </div>
+                ))
+              : ""}
+          </div>
+          <div className="colors-container">
+            <h3>TAMANHOS</h3>
+            {finalSizeArray
+              ? finalSizeArray.map((item: any, id) => (
                   <div key={id}>
                     <input
                       type="radio"
