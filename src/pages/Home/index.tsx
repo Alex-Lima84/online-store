@@ -83,16 +83,18 @@ export default function Home() {
         <aside>
           <div className="colors-container">
             <h3>CORES</h3>
-            {colorsArray.map((item: any, id) => (
-              <div key={id}>
-                <input
-                  type="radio"
-                  name="color-info"
-                  onChange={() => handleColor(item)}
-                ></input>
-                <label>{item}</label>
-              </div>
-            ))}
+            {colorsArray
+              ? colorsArray.map((item: any, id) => (
+                  <div key={id}>
+                    <input
+                      type="radio"
+                      name="color-info"
+                      onChange={() => handleColor(item)}
+                    ></input>
+                    <label>{item}</label>
+                  </div>
+                ))
+              : ""}
           </div>
         </aside>
         <div className="clothes-container">
