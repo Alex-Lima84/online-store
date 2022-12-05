@@ -3,7 +3,7 @@ import "./styles.scss";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import data from "../../api-data/db.json";
-import { Idata, IsortList, IcolorList } from "../../interfaces";
+import { Idata, IsortList } from "../../interfaces";
 
 const sortList: IsortList[] = [
   {

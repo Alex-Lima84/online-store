@@ -8,13 +8,7 @@ export interface Idata {
   size: [string];
   date: string;
 }
-
 export interface IsortList {
   id: number;
   name: string;
-}
-
-export interface IcolorList {
-  id: number;
-  color: string;
 }
