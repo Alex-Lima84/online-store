@@ -24,19 +24,6 @@ const sortList: IsortList[] = [
   },
 ];
 
-const colorList: IcolorList[] = [
-  { id: 1, color: "Amarelo" },
-  { id: 2, color: "Azul" },
-  { id: 3, color: "Branco" },
-  { id: 4, color: "Cinza" },
-  { id: 5, color: "Laranja" },
-  { id: 6, color: "Verde" },
-  { id: 7, color: "Vermelho" },
-  { id: 8, color: "Preto" },
-  { id: 9, color: "Rosa" },
-  { id: 10, color: "Vinho" },
-];
-
 export default function Home() {
   const [sortOption, setsortOption] = useState<number>(0);
   const [clothesInfo, setClothesInfo] = useState<any>([]);
@@ -69,6 +56,9 @@ export default function Home() {
     setClothesInfo(filteredClothes);
   };
 
+  const colorsSet = new Set(clothesInfo.map((item: any) => item.color));
+  const colorsArray = [...colorsSet];
+
   return (
     <>
       <Header />
@@ -93,14 +83,14 @@ export default function Home() {
         <aside>
           <div className="colors-container">
             <h3>CORES</h3>
-            {colorList.map((item: any) => (
-              <div>
+            {colorsArray.map((item: any, id) => (
+              <div key={id}>
                 <input
                   type="radio"
                   name="color-info"
-                  onChange={() => handleColor(item.color)}
+                  onChange={() => handleColor(item)}
                 ></input>
-                <label>{item.color}</label>
+                <label>{item}</label>
               </div>
             ))}
           </div>
