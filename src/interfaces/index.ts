@@ -9,6 +9,6 @@ export interface Idata {
   date: string;
 }
 export interface IsortList {
-  id: number;
+  id: string;
   name: string;
 }
