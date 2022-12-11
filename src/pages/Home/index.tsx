@@ -60,7 +60,7 @@ export default function Home() {
     };
 
     handleSortOption(sortOption);
-  }, [sortOption, color]);
+  }, [sortOption, color, size]);
 
   const handleColor = (color: string) => {
     if (color === "Todas as cores") {
@@ -74,8 +74,29 @@ export default function Home() {
     }
   };
 
-  const handleSize = (size: any) => {
-    console.log(size);
+  const handleSize = (size: string) => {
+    if (size === "Todos os tamanhos") {
+      console.log(size);
+      setClothesInfo(data.products);
+    }
+
+    const sizeArray: {
+      id: string;
+      name: string;
+      price: number;
+      parcelamento: number[];
+      color: string;
+      image: string;
+      size: string[];
+      date: string;
+    }[] = [];
+
+    const mappedSize = [...data.products].map((item) => {
+      if (item.size.includes(size)) {
+        sizeArray.push(item);
+      }
+    });
+    setClothesInfo(sizeArray);
   };
 
   const colorsSet = new Set(clothesSort.map((item: any) => item.color));
