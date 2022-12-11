@@ -26,49 +26,69 @@ const sortList: IsortList[] = [
 export default function Home() {
   const [sortOption, setsortOption] = useState<string>("0");
   const [clothesInfo, setClothesInfo] = useState<any>([]);
-  const [filteredColor, setFilteredColor] = useState<string>();
+  const [clothesSort, setClothesSort] = useState<any>([]);
+  const [color, setColor] = useState<string>("");
+  const [size, setSize] = useState<string>("");
 
   useEffect(() => {
     setClothesInfo(data.products);
+    setClothesSort(data.products);
 
     const handleSortOption = (sortOption: string) => {
+      if (sortOption === "1") {
+        return;
+      }
+
       if (sortOption === "2") {
-        console.log("mais recentes");
+        const mostRecent = [...data.products].sort((a, b) =>
+          a.date < b.date ? -1 : 1
+        );
+        setClothesInfo(mostRecent);
       }
       if (sortOption === "3") {
-        const lowestPrice = [clothesInfo].sort((a: any, b: any) => a - b);
-        setClothesInfo(lowestPrice);
+        const lowerValue = [...data.products].sort((a, b) =>
+          a.price < b.price ? -1 : 1
+        );
+        setClothesInfo(lowerValue);
       }
       if (sortOption === "4") {
-        const highestPrice = [clothesInfo].sort((a: any, b: any) => b - a);
-        setClothesInfo(highestPrice);
+        const highestValue = [...data.products].sort((a, b) =>
+          a.price < b.price ? 1 : -1
+        );
+        setClothesInfo(highestValue);
       }
     };
+
     handleSortOption(sortOption);
-  }, [sortOption, clothesInfo, filteredColor]);
+  }, [sortOption, color]);
 
   const handleColor = (color: string) => {
-    console.log(color);
-    setFilteredColor(color);
-    const filteredClothes = clothesInfo.filter((clothing: any) => {
-      return clothing.color === filteredColor;
-    });
-    setClothesInfo(filteredClothes);
+    if (color === "Todas as cores") {
+      setClothesInfo(data.products);
+    } else {
+      const filterByColor = data.products.filter(
+        (clothesColor: { color: string }) => clothesColor.color === color
+      );
+
+      setClothesInfo(filterByColor);
+    }
   };
 
-  const handleSize = (size: string) => {
+  const handleSize = (size: any) => {
     console.log(size);
   };
 
-  const colorsSet = new Set(clothesInfo.map((item: any) => item.color));
+  const colorsSet = new Set(clothesSort.map((item: any) => item.color));
   const colorsArray = [...colorsSet].sort();
+  colorsArray.push("Todas as cores");
 
-  const sizeSet = new Set(clothesInfo.map((item: any) => item.size));
+  const sizeSet = new Set(clothesSort.map((item: any) => item.size));
   const sizeArray = [...sizeSet];
 
   const newSizeArray = sizeArray.flat(1);
   const newSizeSet = new Set(newSizeArray);
   const finalSizeArray = [...newSizeSet].sort();
+  finalSizeArray.push("Todos os tamanhos");
 
   return (
     <>
@@ -98,6 +118,7 @@ export default function Home() {
               ? colorsArray.map((item: any, id) => (
                   <div key={id}>
                     <input
+                      value={color}
                       type="radio"
                       name="color-info"
                       onChange={() => handleColor(item)}
