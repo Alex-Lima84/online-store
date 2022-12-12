@@ -12,3 +12,8 @@ export interface IsortList {
   id: string;
   name: string;
 }
+
+export interface IpriceList {
+  id: string;
+  price: string;
+}

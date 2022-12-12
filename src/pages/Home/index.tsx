@@ -2,7 +2,7 @@ import "./styles.scss";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import data from "../../api-data/db.json";
-import { Idata, IsortList } from "../../interfaces";
+import { Idata, IpriceList, IsortList } from "../../interfaces";
 
 const sortList: IsortList[] = [
   {
@@ -23,12 +23,23 @@ const sortList: IsortList[] = [
   },
 ];
 
+const priceList: IpriceList[] = [
+  { id: "1", price: "de R$0 até R$ 50" },
+  { id: "2", price: "de R$51 até R$ 150" },
+  { id: "3", price: "de R$151 até R$ 300" },
+  { id: "4", price: "de R$301 até R$ 500" },
+  { id: "5", price: "a partir de R$ 500" },
+  { id: "6", price: "Todos os preços" },
+];
+
 export default function Home() {
   const [sortOption, setsortOption] = useState<string>("0");
   const [clothesInfo, setClothesInfo] = useState<any>([]);
   const [clothesSort, setClothesSort] = useState<any>([]);
   const [color, setColor] = useState<string>("");
   const [size, setSize] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     setClothesInfo(data.products);
@@ -56,7 +67,7 @@ export default function Home() {
           a.price < b.price ? 1 : -1
         );
         setClothesInfo(highestValue);
-      }      
+      }
     };
 
     handleSortOption(sortOption);
@@ -75,28 +86,107 @@ export default function Home() {
   };
 
   const handleSize = (size: string) => {
-    if (size === "Todos os tamanhos") {
-      console.log(size);
+    if (size !== "Todos os tamanhos") {
+      const sizeArray: {
+        id: string;
+        name: string;
+        price: number;
+        parcelamento: number[];
+        color: string;
+        image: string;
+        size: string[];
+        date: string;
+      }[] = [];
+
+      const mappedSize = [...data.products].map((item) => {
+        if (item.size.includes(size)) {
+          sizeArray.push(item);
+          setClothesInfo(sizeArray);
+        }
+      });
+    } else {
       setClothesInfo(data.products);
     }
+  };
 
-    const sizeArray: {
-      id: string;
-      name: string;
-      price: number;
-      parcelamento: number[];
-      color: string;
-      image: string;
-      size: string[];
-      date: string;
-    }[] = [];
+  const handlePrice = (id: string) => {
+    if (id !== "6") {
+      const priceArray: {
+        id: string;
+        name: string;
+        price: number;
+        parcelamento: number[];
+        color: string;
+        image: string;
+        size: string[];
+        date: string;
+      }[] = [];
 
-    const mappedSize = [...data.products].map((item) => {
-      if (item.size.includes(size)) {
-        sizeArray.push(item);
-      }
-    });
-    setClothesInfo(sizeArray);
+      const mappedPrice = [...data.products].map((item) => {
+        if (id === "1") {
+          if (item.price > 0 && item.price <= 50) {
+            priceArray.push(item);
+            setClothesInfo(priceArray);
+            setErrorMessage("");
+          } else {
+            if (priceArray.length === 0) {
+              setErrorMessage("Produto não encontrado.");
+              setClothesInfo("");
+            }
+          }
+        }
+        if (id === "2") {
+          if (item.price >= 51 && item.price <= 150) {
+            priceArray.push(item);
+            setClothesInfo(priceArray);
+            setErrorMessage("");
+          } else {
+            if (priceArray.length === 0) {
+              console.log("vazio");
+            }
+          }
+        }
+        if (id === "3") {
+          if (item.price >= 151 && item.price <= 300) {
+            priceArray.push(item);
+            setClothesInfo(priceArray);
+            setErrorMessage("");
+          } else {
+            if (priceArray.length === 0) {
+              setErrorMessage("Produto não encontrado.");
+              setClothesInfo("");
+            }
+          }
+        }
+        if (id === "4") {
+          if (item.price >= 301 && item.price <= 500) {
+            priceArray.push(item);
+            setClothesInfo(priceArray);
+            setErrorMessage("");
+          } else {
+            if (priceArray.length === 0) {
+              setErrorMessage("Produto não encontrado.");
+              setClothesInfo("");
+            }
+          }
+        }
+        if (id === "5") {
+          if (item.price > 500) {
+            priceArray.push(item);
+            setClothesInfo(priceArray);
+            setErrorMessage("");
+          } else {
+            if (priceArray.length === 0) {
+              setErrorMessage("Produto não encontrado.");
+              setClothesInfo("");
+            }
+          }
+        }
+      });
+    } else {
+      setClothesInfo(data.products);
+      setErrorMessage("");
+    }
   };
 
   const colorsSet = new Set(clothesSort.map((item: any) => item.color));
@@ -149,14 +239,14 @@ export default function Home() {
                 ))
               : ""}
           </div>
-          <div className="colors-container">
+          <div className="sizes-container">
             <h3>TAMANHOS</h3>
             {finalSizeArray
               ? finalSizeArray.map((item: any, id) => (
                   <div key={id}>
                     <input
                       type="radio"
-                      name="color-info"
+                      name="size-info"
                       onChange={() => handleSize(item)}
                     ></input>
                     <label>{item}</label>
@@ -164,8 +254,23 @@ export default function Home() {
                 ))
               : ""}
           </div>
+          <div className="prices-container">
+            <h3>FAIXA DE PREÇO</h3>
+            {priceList.map((item: any, id) => (
+              <div key={id}>
+                <input
+                  value={color}
+                  type="radio"
+                  name="price-info"
+                  onChange={() => handlePrice(item.id)}
+                ></input>
+                <label>{item.price}</label>
+              </div>
+            ))}
+          </div>
         </aside>
         <div className="clothes-container">
+          {errorMessage ? <h3>{errorMessage}</h3> : ""}
           {clothesInfo
             ? clothesInfo.map((item: Idata) => (
                 <div key={item.id} className="individual-clothing">
