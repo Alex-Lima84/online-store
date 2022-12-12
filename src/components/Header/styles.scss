@@ -5,11 +5,13 @@ header {
   flex-wrap: wrap;
 
   img {
-    margin: 10px 20px;    
+    margin: 10px 20px;
+    cursor: pointer;    
   }
 
   .shopping-cart {
     max-width: 30px;
+    cursor: pointer;
   }
 
 

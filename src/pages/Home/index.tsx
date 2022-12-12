@@ -283,7 +283,6 @@ export default function Home() {
                     até {item.parcelamento[0]}x de R${" "}
                     {item.parcelamento[1].toFixed(2)}{" "}
                   </span>
-                  <span>{item.date}</span>
                   <button
                     onClick={(event) => {
                       event.preventDefault();
