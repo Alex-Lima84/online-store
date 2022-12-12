@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import data from "../../api-data/db.json";
 import { Idata, IpriceList, IsortList } from "../../interfaces";
 
+import img from "../../assets/images/img_2.png";
+
 const sortList: IsortList[] = [
   {
     id: "1",
@@ -47,7 +49,7 @@ export default function Home() {
 
     const handleSortOption = (sortOption: string) => {
       if (sortOption === "1") {
-        return;
+        setClothesInfo(clothesInfo);
       }
 
       if (sortOption === "2") {
@@ -130,7 +132,7 @@ export default function Home() {
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
-              setErrorMessage("Produto não encontrado.");
+              setErrorMessage("Não há produtos nesta faixa de preço.");
               setClothesInfo("");
             }
           }
@@ -142,7 +144,8 @@ export default function Home() {
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
-              console.log("vazio");
+              setErrorMessage("Não há produtos nesta faixa de preço.");
+              setClothesInfo("");
             }
           }
         }
@@ -153,7 +156,7 @@ export default function Home() {
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
-              setErrorMessage("Produto não encontrado.");
+              setErrorMessage("Não há produtos nesta faixa de preço.");
               setClothesInfo("");
             }
           }
@@ -274,7 +277,10 @@ export default function Home() {
           {clothesInfo
             ? clothesInfo.map((item: Idata) => (
                 <div key={item.id} className="individual-clothing">
-                  <img src={item.image} alt={`clothes ${item.id}`} />
+                  <img
+                    src={require(`../../assets/images/${item.image}`)}
+                    alt={`clothes ${item.id}`}
+                  />
                   <h3>{item.name}</h3>
                   <span>R$ {item.price.toFixed(2)}</span>
                   <span>
