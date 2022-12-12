@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import data from "../../api-data/db.json";
 import { Idata, IpriceList, IsortList } from "../../interfaces";
 
-import img from "../../assets/images/img_2.png";
-
 const sortList: IsortList[] = [
   {
     id: "1",
@@ -39,8 +37,7 @@ export default function Home() {
   const [clothesInfo, setClothesInfo] = useState<any>([]);
   const [clothesSort, setClothesSort] = useState<any>([]);
   const [color, setColor] = useState<string>("");
-  const [size, setSize] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
+  const [size, setSize] = useState<string>("");  
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
