@@ -37,7 +37,7 @@ export default function Home() {
   const [clothesInfo, setClothesInfo] = useState<any>([]);
   const [clothesSort, setClothesSort] = useState<any>([]);
   const [color, setColor] = useState<string>("");
-  const [size, setSize] = useState<string>("");  
+  const [size, setSize] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
@@ -72,6 +72,10 @@ export default function Home() {
     handleSortOption(sortOption);
   }, [sortOption, color, size]);
 
+  const colorsSet = new Set(clothesSort.map((item: any) => item.color));
+  const colorsArray = [...colorsSet].sort();
+  colorsArray.push("Todas as cores");
+
   const handleColor = (color: string) => {
     if (color === "Todas as cores") {
       setClothesInfo(data.products);
@@ -83,6 +87,13 @@ export default function Home() {
       setClothesInfo(filterByColor);
     }
   };
+
+  const sizeSet = new Set(clothesSort.map((item: any) => item.size));
+  const sizeArray = [...sizeSet];
+  const newSizeArray = sizeArray.flat(1);
+  const newSizeSet = new Set(newSizeArray);
+  const finalSizeArray = [...newSizeSet].sort();
+  finalSizeArray.push("Todos os tamanhos");
 
   const handleSize = (size: string) => {
     if (size !== "Todos os tamanhos") {
@@ -188,18 +199,6 @@ export default function Home() {
       setErrorMessage("");
     }
   };
-
-  const colorsSet = new Set(clothesSort.map((item: any) => item.color));
-  const colorsArray = [...colorsSet].sort();
-  colorsArray.push("Todas as cores");
-
-  const sizeSet = new Set(clothesSort.map((item: any) => item.size));
-  const sizeArray = [...sizeSet];
-
-  const newSizeArray = sizeArray.flat(1);
-  const newSizeSet = new Set(newSizeArray);
-  const finalSizeArray = [...newSizeSet].sort();
-  finalSizeArray.push("Todos os tamanhos");
 
   return (
     <>
