@@ -40,19 +40,19 @@ export default function Home() {
       }
 
       if (sortOption === "2") {
-        const mostRecent = [...data.products].sort((a, b) =>
+        const mostRecent = [...clothesInfo].sort((a, b) =>
           a.date < b.date ? -1 : 1
         );
         setClothesInfo(mostRecent);
       }
       if (sortOption === "3") {
-        const lowerValue = [...data.products].sort((a, b) =>
+        const lowerValue = [...clothesInfo].sort((a, b) =>
           a.price < b.price ? -1 : 1
         );
         setClothesInfo(lowerValue);
       }
       if (sortOption === "4") {
-        const highestValue = [...data.products].sort((a, b) =>
+        const highestValue = [...clothesInfo].sort((a, b) =>
           a.price < b.price ? 1 : -1
         );
         setClothesInfo(highestValue);
@@ -64,7 +64,7 @@ export default function Home() {
 
   const handleColor = (color: string) => {
     if (color === "Todas as cores") {
-      setClothesInfo(data.products);
+      setClothesInfo(clothesInfo);
     } else {
       const filterByColor = data.products.filter(
         (clothesColor: { color: string }) => clothesColor.color === color
@@ -77,7 +77,7 @@ export default function Home() {
   const handleSize = (size: string) => {
     if (size === "Todos os tamanhos") {
       console.log(size);
-      setClothesInfo(data.products);
+      setClothesInfo(clothesInfo);
     }
 
     const sizeArray: {
