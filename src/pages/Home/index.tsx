@@ -56,7 +56,7 @@ export default function Home() {
           a.price < b.price ? 1 : -1
         );
         setClothesInfo(highestValue);
-      }
+      }      
     };
 
     handleSortOption(sortOption);
@@ -64,7 +64,7 @@ export default function Home() {
 
   const handleColor = (color: string) => {
     if (color === "Todas as cores") {
-      setClothesInfo(clothesInfo);
+      setClothesInfo(data.products);
     } else {
       const filterByColor = data.products.filter(
         (clothesColor: { color: string }) => clothesColor.color === color
@@ -77,7 +77,7 @@ export default function Home() {
   const handleSize = (size: string) => {
     if (size === "Todos os tamanhos") {
       console.log(size);
-      setClothesInfo(clothesInfo);
+      setClothesInfo(data.products);
     }
 
     const sizeArray: {
