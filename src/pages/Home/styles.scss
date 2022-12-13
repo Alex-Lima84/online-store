@@ -3,61 +3,77 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 50px;
+  margin-bottom: 20px;
 
   p {
     margin-left: 20px;
+    font-weight: 700;
+    font-size: 24px;
   }
 
   .sort-options {
-    margin-right: 60px;
+    margin-right: 100px;
+    select {
+      cursor: pointer;
+    }
   }
 }
 
 .main-container {
-    width: 100%;
+  display: flex;
+  justify-content: center;
+
+  aside {
+    width: 213px;
+    margin-left: 20px;
+    .colors-container {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+  }
+  .clothes-container {
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
 
-    aside {
-        width: 213px;
-        margin-left: 20px;
-        .colors-container {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-    }
-    .clothes-container {
+    .inner-clothes-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 90%;
+
+      .individual-clothing {
         display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-
-        .individual-clothing {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 10px;
-            padding: 5px;
-            border: 1px solid rgb(121, 121, 121);
-            img{
-              object-fit: contain;
-            }
-            h3{
-              font-weight: 400;
-              margin: 5px 0;
-            }
-            span:first-of-type {
-              font-weight: 700;
-              margin: 2px 0;
-            }
-            button{
-              margin: 5px 0;
-              background-color: #000;
-              color: #fff;
-              width: 100px;
-              height: 30px;
-              cursor: pointer;
-            }
+        flex-direction: column;
+        align-items: center;
+        margin: 10px;
+        padding: 5px;
+        border: 1px solid rgba(121, 121, 121, 0.493);
+        border-radius: 5px;
+        img {
+          object-fit: contain;
         }
+        h3 {
+          font-weight: 400;
+          margin: 5px 0;
+        }
+        span:first-of-type {
+          font-weight: 700;
+          margin: 2px 0;
+        }
+        button {
+          margin: 5px 0;
+          background-color: #000;
+          border-radius: 5px;
+          color: #fff;
+          width: 100px;
+          height: 30px;
+          cursor: pointer;
+        }
+      }
     }
+  }
 }

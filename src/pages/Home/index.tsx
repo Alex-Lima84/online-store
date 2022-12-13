@@ -269,30 +269,32 @@ export default function Home() {
           </div>
         </aside>
         <div className="clothes-container">
-          {errorMessage ? <h3>{errorMessage}</h3> : ""}
-          {clothesInfo
-            ? clothesInfo.map((item: Idata) => (
-                <div key={item.id} className="individual-clothing">
-                  <img
-                    src={require(`../../assets/images/${item.image}`)}
-                    alt={`clothes ${item.id}`}
-                  />
-                  <h3>{item.name}</h3>
-                  <span>R$ {item.price.toFixed(2)}</span>
-                  <span>
-                    até {item.parcelamento[0]}x de R${" "}
-                    {item.parcelamento[1].toFixed(2)}{" "}
-                  </span>
-                  <button
-                    onClick={(event) => {
-                      event.preventDefault();
-                    }}
-                  >
-                    Comprar
-                  </button>
-                </div>
-              ))
-            : ""}
+          <div className="inner-clothes-container">
+            {errorMessage ? <h3>{errorMessage}</h3> : ""}
+            {clothesInfo
+              ? clothesInfo.map((item: Idata) => (
+                  <div key={item.id} className="individual-clothing">
+                    <img
+                      src={require(`../../assets/images/${item.image}`)}
+                      alt={`clothes ${item.id}`}
+                    />
+                    <h3>{item.name}</h3>
+                    <span>R$ {item.price.toFixed(2)}</span>
+                    <span>
+                      até {item.parcelamento[0]}x de R${" "}
+                      {item.parcelamento[1].toFixed(2)}{" "}
+                    </span>
+                    <button
+                      onClick={(event) => {
+                        event.preventDefault();
+                      }}
+                    >
+                      Comprar
+                    </button>
+                  </div>
+                ))
+              : ""}
+          </div>
         </div>
       </div>
     </>
