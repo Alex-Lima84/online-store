@@ -39,6 +39,9 @@ export default function Home() {
   const [color, setColor] = useState<string>("");
   const [size, setSize] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [filteredValues, setFilteredValues] = useState<boolean>(false);
+
+  console.log(filteredValues);
 
   useEffect(() => {
     setClothesInfo(data.products);
@@ -79,12 +82,14 @@ export default function Home() {
   const handleColor = (color: string) => {
     if (color === "Todas as cores") {
       setClothesInfo(data.products);
+      setFilteredValues(false);
     } else {
       const filterByColor = data.products.filter(
         (clothesColor: { color: string }) => clothesColor.color === color
       );
 
       setClothesInfo(filterByColor);
+      setFilteredValues(true);
     }
   };
 
@@ -112,10 +117,12 @@ export default function Home() {
         if (item.size.includes(size)) {
           sizeArray.push(item);
           setClothesInfo(sizeArray);
+          setFilteredValues(true);
         }
       });
     } else {
       setClothesInfo(data.products);
+      setFilteredValues(false);
     }
   };
 
@@ -137,10 +144,12 @@ export default function Home() {
           if (item.price > 0 && item.price <= 50) {
             priceArray.push(item);
             setClothesInfo(priceArray);
+            setFilteredValues(true);
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
               setErrorMessage("Não há produtos nesta faixa de preço.");
+              setFilteredValues(true);
               setClothesInfo("");
             }
           }
@@ -149,10 +158,12 @@ export default function Home() {
           if (item.price >= 51 && item.price <= 150) {
             priceArray.push(item);
             setClothesInfo(priceArray);
+            setFilteredValues(true);
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
               setErrorMessage("Não há produtos nesta faixa de preço.");
+              setFilteredValues(true);
               setClothesInfo("");
             }
           }
@@ -161,10 +172,12 @@ export default function Home() {
           if (item.price >= 151 && item.price <= 300) {
             priceArray.push(item);
             setClothesInfo(priceArray);
+            setFilteredValues(true);
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
               setErrorMessage("Não há produtos nesta faixa de preço.");
+              setFilteredValues(true);
               setClothesInfo("");
             }
           }
@@ -173,10 +186,12 @@ export default function Home() {
           if (item.price >= 301 && item.price <= 500) {
             priceArray.push(item);
             setClothesInfo(priceArray);
+            setFilteredValues(true);
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
               setErrorMessage("Produto não encontrado.");
+              setFilteredValues(true);
               setClothesInfo("");
             }
           }
@@ -185,10 +200,12 @@ export default function Home() {
           if (item.price > 500) {
             priceArray.push(item);
             setClothesInfo(priceArray);
+            setFilteredValues(true);
             setErrorMessage("");
           } else {
             if (priceArray.length === 0) {
               setErrorMessage("Produto não encontrado.");
+              setFilteredValues(true);
               setClothesInfo("");
             }
           }
@@ -196,6 +213,7 @@ export default function Home() {
       });
     } else {
       setClothesInfo(data.products);
+      setFilteredValues(false);
       setErrorMessage("");
     }
   };
@@ -203,25 +221,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="main-info">
-        <p>Blusas</p>
-        <div className="sort-options">
-          <select
-            className=""
-            value={sortOption}
-            onChange={(e: any) => setsortOption(e.target.value)}
-          >
-            {sortList.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
       <div className="main-container">
         <aside>
+          <h2>Blusas</h2>
           <div className="colors-container">
             <h3>CORES</h3>
             {colorsArray
@@ -269,6 +271,19 @@ export default function Home() {
           </div>
         </aside>
         <div className="clothes-container">
+          <div className="sort-options">
+            <select
+              className=""
+              value={sortOption}
+              onChange={(e: any) => setsortOption(e.target.value)}
+            >
+              {sortList.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.name}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="inner-clothes-container">
             {errorMessage ? <h3>{errorMessage}</h3> : ""}
             {clothesInfo
@@ -295,6 +310,13 @@ export default function Home() {
                 ))
               : ""}
           </div>
+          {filteredValues ? (
+            ""
+          ) : (
+            <div className="load-more-container">
+              <button>Carregar mais</button>
+            </div>
+          )}
         </div>
       </div>
     </>
