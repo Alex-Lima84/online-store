@@ -7,6 +7,10 @@
     margin-left: 20px;
     margin-top: 50px;
 
+    input{
+      margin-right: 2px;
+    }
+
     .colors-container {      
       display: flex;
       flex-direction: column;
@@ -86,6 +90,7 @@
     .load-more-container {
       button {
         background-color:#00C0EE;
+        cursor: pointer;
         color: #fff;
         border: none;
         font-weight: 700;
